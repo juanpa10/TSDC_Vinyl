@@ -1,9 +1,13 @@
 package com.miso.vinilos.ui.adapters
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.miso.vinilos.R
+import com.miso.vinilos.databinding.ItemBandBinding
 import com.miso.vinilos.models.Band
 
 class BandsAdapter : RecyclerView.Adapter<BandsAdapter.BandsViewHolder>() {
@@ -15,22 +19,28 @@ class BandsAdapter : RecyclerView.Adapter<BandsAdapter.BandsViewHolder>() {
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BandsViewHolder {
-        val withDataBinding:
+        val withDataBinding: ItemBandBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            BandsViewHolder.LAYOUT,
+            parent,
+            false)
+        return BandsViewHolder(withDataBinding)
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return bands.size
     }
 
     override fun onBindViewHolder(holder: BandsViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.viewDataBinding.also {
+            it.band = bands[position]
+        }
     }
 
-
-    class BandsViewHolder(private val viewDataBinding: ViewDataBinding) :
-            RecyclerView.ViewHolder(viewDataBinding.root) {
-                companion object {
-
-                }
-            }
+    class BandsViewHolder(val viewDataBinding: ItemBandBinding) : RecyclerView.ViewHolder(viewDataBinding.root) {
+        companion object {
+            @LayoutRes
+            val LAYOUT = R.layout.item_band
+        }
+    }
 }

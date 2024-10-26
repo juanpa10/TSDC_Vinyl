@@ -7,6 +7,10 @@
 *.iml
 *.hprof
 
+# Ignorar archivos específicos de la configuración de Android Studio
+.idea/deploymentTargetSelector.xml
+.idea/misc.xml
+
 # Gradle files
 .gradle/
 /local.properties

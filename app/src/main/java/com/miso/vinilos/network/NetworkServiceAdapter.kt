@@ -1,6 +1,7 @@
 package com.miso.vinilos.network
 
 import android.content.Context
+import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -48,7 +49,9 @@ class NetworkServiceAdapter constructor(context: Context) {
                 onComplete(list)
             },
             {
-                onError(it)
+                    error ->
+                Log.e("NetworkServiceAdapter", "Error fetching bands: ${error.message}")
+                onError(error)
             }
         ))
     }
