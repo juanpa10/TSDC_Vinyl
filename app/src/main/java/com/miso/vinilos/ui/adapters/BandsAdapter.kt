@@ -1,14 +1,16 @@
 package com.miso.vinilos.ui.adapters
 
+import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.miso.vinilos.R
 import com.miso.vinilos.databinding.ItemBandBinding
 import com.miso.vinilos.models.Band
+import java.util.Locale
 
 class BandsAdapter : RecyclerView.Adapter<BandsAdapter.BandsViewHolder>() {
 
@@ -34,6 +36,12 @@ class BandsAdapter : RecyclerView.Adapter<BandsAdapter.BandsViewHolder>() {
     override fun onBindViewHolder(holder: BandsViewHolder, position: Int) {
         holder.viewDataBinding.also {
             it.band = bands[position]
+            val imageUrl = bands[position].image
+            Glide.with(holder.itemView.context)
+                .load(imageUrl)
+                .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_placeholder)
+                .into(it.bandImage)
         }
     }
 
