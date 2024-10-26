@@ -1,6 +1,5 @@
 package com.miso.vinilos.ui.adapters
 
-import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
@@ -10,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.miso.vinilos.R
 import com.miso.vinilos.databinding.ItemBandBinding
 import com.miso.vinilos.models.Band
-import java.util.Locale
 
 class BandsAdapter : RecyclerView.Adapter<BandsAdapter.BandsViewHolder>() {
 

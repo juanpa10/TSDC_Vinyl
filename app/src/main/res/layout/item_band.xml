@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <!-- Define una variable para el objeto Band -->
         <variable
             name="band"
             type="com.miso.vinilos.models.Band" />

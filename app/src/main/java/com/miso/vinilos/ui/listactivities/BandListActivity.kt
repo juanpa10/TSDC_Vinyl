@@ -1,6 +1,7 @@
 package com.miso.vinilos.ui.listactivities
 
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -22,19 +23,19 @@ class BandListActivity : AppCompatActivity() {
         binding = ActivityArtistsListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Configuración inicial del adaptador
         viewModelAdapter = BandsAdapter()
 
-        // Configuración del RecyclerView
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@BandListActivity)
             adapter = viewModelAdapter
         }
 
-        // Inicialización del ViewModel
+        binding.root.findViewById<ImageView>(R.id.back_button).setOnClickListener {
+            finish()
+        }
+
         viewModel = ViewModelProvider(this, BandViewModel.Factory(application)).get(BandViewModel::class.java)
 
-        // Observadores de los datos y errores de red
         viewModel.bands.observe(this, Observer { bands ->
             bands?.let {
                 viewModelAdapter?.bands = it
