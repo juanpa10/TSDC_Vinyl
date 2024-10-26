@@ -6,6 +6,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.miso.vinilos.R
 import com.miso.vinilos.databinding.ItemBandBinding
 import com.miso.vinilos.models.Band
@@ -37,6 +38,7 @@ class BandsAdapter : RecyclerView.Adapter<BandsAdapter.BandsViewHolder>() {
             val imageUrl = bands[position].image
             Glide.with(holder.itemView.context)
                 .load(imageUrl)
+                .apply(RequestOptions.circleCropTransform())
                 .placeholder(R.drawable.ic_placeholder)
                 .error(R.drawable.ic_placeholder)
                 .into(it.bandImage)
