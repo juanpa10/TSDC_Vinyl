@@ -11,7 +11,7 @@ import com.miso.vinilos.R
 import com.miso.vinilos.databinding.ItemBandBinding
 import com.miso.vinilos.models.Band
 
-class BandsAdapter : RecyclerView.Adapter<BandsAdapter.BandsViewHolder>() {
+class BandsAdapter(private val onBandClick: (Band) -> Unit) : RecyclerView.Adapter<BandsAdapter.BandsViewHolder>() {
 
     var bands: List<Band> = emptyList()
         set(value) {
@@ -33,6 +33,7 @@ class BandsAdapter : RecyclerView.Adapter<BandsAdapter.BandsViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: BandsViewHolder, position: Int) {
+        val band = bands[position]
         holder.viewDataBinding.also {
             it.band = bands[position]
             val imageUrl = bands[position].image
@@ -42,6 +43,7 @@ class BandsAdapter : RecyclerView.Adapter<BandsAdapter.BandsViewHolder>() {
                 .placeholder(R.drawable.ic_placeholder)
                 .error(R.drawable.ic_placeholder)
                 .into(it.bandImage)
+            it.root.setOnClickListener { onBandClick(band) }
         }
     }
 
