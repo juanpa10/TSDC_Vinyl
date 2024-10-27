@@ -4,41 +4,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".landing.LandingActivity">
+    tools:context=".landing.LandingActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="100dp"
+    android:layout_margin="10dp">
 
-    <Button
-        android:id="@+id/btnColeccionistas"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/txtArtistas"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:text="Coleccionistas"
-        app:layout_constraintBottom_toTopOf="@+id/btnAlbumes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnArtistas"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:text="Artistas"
-        app:layout_constraintBottom_toTopOf="@+id/btnColeccionistas"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/btnBackToMain"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/imgArtistas"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/rounded_rectangle"
+        android:scaleType="centerCrop"
+        android:src="@drawable/artists"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.681" />
+        app:layout_constraintTop_toBottomOf="@+id/txtArtistas"/>
 
-    <Button
-        android:id="@+id/btnAlbumes"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/txtColeccionistas"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="192dp"
-        android:text="Álbumes"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="20dp"
+        android:text="Coleccionistas"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgArtistas" />
+
+    <ImageView
+        android:id="@+id/imgColeccionistas"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:background="@drawable/rounded_rectangle"
+        android:scaleType="centerCrop"
+        android:src="@drawable/collectors"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtColeccionistas" />
+
+    <TextView
+        android:id="@+id/txtAlbumes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Álbumes"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgColeccionistas"/>
+
+    <ImageView
+        android:id="@+id/imgAlbumes"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:background="@drawable/rounded_rectangle"
+        android:scaleType="centerCrop"
+        android:src="@drawable/albums"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtAlbumes" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/act"
@@ -49,7 +89,8 @@
         android:contentDescription="Botón flotante"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_add" />
+        app:srcCompat="@drawable/ic_add"
+        tools:ignore="HardcodedText" />
 
     <ImageButton
         android:id="@+id/btnBackToMain"
@@ -57,11 +98,12 @@
         android:layout_height="40dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="40dp"
-        android:contentDescription="Botón para regresar al MainActivity"
         android:background="@drawable/user_rounded_style"
+        android:contentDescription="Botón para regresar al MainActivity"
         android:src="@drawable/ic_user"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@android:color/black" />
+        app:tint="@android:color/black"
+        tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

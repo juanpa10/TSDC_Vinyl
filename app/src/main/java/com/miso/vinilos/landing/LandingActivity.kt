@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.app.AppCompatActivity
 import com.miso.vinilos.R
@@ -52,7 +53,7 @@ class LandingActivity : AppCompatActivity() {
     }
 
     private fun bindBandListBtn() {
-        findViewById<Button>(R.id.btnArtistas).setOnClickListener {
+        findViewById<ImageView>(R.id.imgArtistas).setOnClickListener {
             val intent = Intent(this, BandListActivity::class.java)
             startActivity(intent)
         }
