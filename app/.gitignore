@@ -1,1 +1,57 @@
-/build
+# Build files
+/build/
+/app/build/
+
+# IntelliJ / Android Studio
+.idea/
+*.iml
+*.hprof
+
+# Ignorar archivos específicos de la configuración de Android Studio
+.idea/deploymentTargetSelector.xml
+.idea/misc.xml
+
+# Gradle files
+.gradle/
+/local.properties
+/.gradle
+/captures/
+/.externalNativeBuild/
+
+# Kotlin
+*.kotlin_metadata
+*.kotlin_module
+*.class
+
+# Dependency directories
+/.caches/
+/*.iml
+
+# Android
+*.apk
+*.ap_
+*.aab
+
+# Log files
+*.log
+
+# Generated JSON
+.idea/codeStyles/Project.xml
+.idea/codeStyles/codeStyleConfig.xml
+
+# Keystore files (secure)
+*.jks
+*.keystore
+
+# Android Studio Profiling files
+*.hprof
+
+# ProGuard files
+/proguard/
+/proguard-rules.pro
+
+# Firebase
+google-services.json
+
+# Local test configurations
+test-result.xml
