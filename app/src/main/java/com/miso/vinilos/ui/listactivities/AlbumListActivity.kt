@@ -9,21 +9,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.miso.vinilos.R
-import com.miso.vinilos.databinding.ActivityArtistsListBinding
+import com.miso.vinilos.databinding.ActivityAlbumsListBinding
 import com.miso.vinilos.ui.adapters.AlbumsAdapter
 import com.miso.vinilos.ui.fragments.AlbumDetailFragment
 import com.miso.vinilos.viewmodels.AlbumViewModel
 
 class AlbumListActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityArtistsListBinding
+    private lateinit var binding: ActivityAlbumsListBinding
     private lateinit var viewModel: AlbumViewModel
     private var viewModelAdapter: AlbumsAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         println("entre a la activity")
         super.onCreate(savedInstanceState)
-        binding = ActivityArtistsListBinding.inflate(layoutInflater)
+        binding = ActivityAlbumsListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         viewModelAdapter = AlbumsAdapter { album ->
