@@ -4,4 +4,5 @@
     <string name="band_image_description">Imagen del artista</string>
     <string name="album_cover_description">Cover del album</string>
     <string name="back_button_description">Atras</string>
+    <string name="tittle_landing">MusicPedia</string>
 </resources>
