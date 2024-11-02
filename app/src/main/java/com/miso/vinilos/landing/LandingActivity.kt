@@ -48,8 +48,6 @@ class LandingActivity : AppCompatActivity() {
 
     private fun bindBackToMain() {
         backToMainBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
             finish()
         }
     }
@@ -62,9 +60,7 @@ class LandingActivity : AppCompatActivity() {
     }
 
     private fun bindAlbumListBtn() {
-
         findViewById<ImageView>(R.id.imgAlbumes).setOnClickListener {
-            println("boton a getAlbums");
             val intent = Intent(this, AlbumListActivity::class.java)
             startActivity(intent)
         }

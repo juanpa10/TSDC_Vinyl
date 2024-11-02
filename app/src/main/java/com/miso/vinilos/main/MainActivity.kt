@@ -20,14 +20,12 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LandingActivity::class.java)
             intent.putExtra("isAdmin", false)
             startActivity(intent)
-            finish()
         }
 
         btnAdmin.setOnClickListener {
             val intent = Intent(this, LandingActivity::class.java)
             intent.putExtra("isAdmin", true)
             startActivity(intent)
-            finish()
         }
     }
 }

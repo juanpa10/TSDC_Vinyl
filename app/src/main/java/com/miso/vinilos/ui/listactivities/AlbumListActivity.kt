@@ -65,7 +65,7 @@ class AlbumListActivity : AppCompatActivity() {
 
     private fun onNetworkError() {
         if (!viewModel.isNetworkErrorShown.value!!) {
-            Toast.makeText(this, "Network Error. Please try again!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Error de conexion. Por favor intente de nuevo!", Toast.LENGTH_LONG).show()
             viewModel.onNetworkErrorShown()
         }
     }
