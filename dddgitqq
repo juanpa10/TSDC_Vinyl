@@ -1,0 +1,101 @@
+[33mcommit e3f9fc04e0d9ba4d457e33ef4d4f10bbe8081d7d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m
+Merge: 39b7a40 c0dc434
+Author: Juan Pablo Camacho <jp.camacho10@uniandes.edu.co>
+Date:   Sat Nov 2 10:26:54 2024 -0500
+
+    Merge pull request #44 from juanpa10/testsAuto
+    
+    Tests auto
+
+[33mcommit c0dc4347546939935bfbad5ba469dd8b67e2fd13[m[33m ([m[1;31morigin/testsAuto[m[33m)[m
+Author: Felipe Rivera <yf.rivera1851@uniandes.edu.co>
+Date:   Fri Nov 1 22:42:08 2024 -0500
+
+    tests implemented and UI improvements
+
+[33mcommit f912d0a2bd00afd7522b86c378c7d890be9475a1[m
+Author: Felipe Rivera <yf.rivera1851@uniandes.edu.co>
+Date:   Wed Oct 30 15:13:35 2024 -0500
+
+    albums header fix
+
+[33mcommit 39b7a40d363d5287158dacf07200574f4d7ec684[m
+Merge: 3376078 5593e38
+Author: Felipe Rivera <yf.rivera1851@uniandes.edu.co>
+Date:   Wed Oct 30 14:50:33 2024 -0500
+
+    Merge pull request #42 from juanpa10/albumes
+    
+    se agrega funcionalidades de album (sin pruebas)
+
+[33mcommit 5593e3868bcc03d5d9d44d6c1130a7c2082e78ae[m[33m ([m[1;31morigin/albumes[m[33m)[m
+Author: Juan Pablo Camacho Caro <jp.camacho10@uniandes.edu.co>
+Date:   Tue Oct 29 05:44:22 2024 -0500
+
+    se agrega funcionalidades de album (sin pruebas)
+
+[33mcommit 3376078810beefc4ef86e2932e343017ad015bd5[m
+Merge: 86d57de ef2f19a
+Author: Juan Pablo Camacho <jp.camacho10@uniandes.edu.co>
+Date:   Sun Oct 27 15:23:22 2024 -0500
+
+    Merge pull request #41 from juanpa10/artistDetail
+    
+    detail implemented
+
+[33mcommit ef2f19abd109ea9d29e86887af0a5059658d2b20[m[33m ([m[1;31morigin/artistDetail[m[33m)[m
+Author: Felipe Rivera <yf.rivera1851@uniandes.edu.co>
+Date:   Sun Oct 27 15:11:23 2024 -0500
+
+    detail implemented
+
+[33mcommit 86d57defab02df398d9318048b0ff8c7062abf15[m
+Merge: 262ad2d 10a639d
+Author: Juan Pablo Camacho <jp.camacho10@uniandes.edu.co>
+Date:   Sat Oct 26 19:43:06 2024 -0500
+
+    Merge pull request #40 from juanpa10/listBands
+    
+    List bands
+
+[33mcommit 10a639d8d6e11ef198a10451ebd0b5750670c407[m[33m ([m[1;31morigin/listBands[m[33m)[m
+Author: Felipe Rivera <yf.rivera1851@uniandes.edu.co>
+Date:   Sat Oct 26 19:38:50 2024 -0500
+
+    final fixes list artists
+
+[33mcommit 5f73e559aa37109a3f228f195508244e91dc4153[m
+Author: Felipe Rivera <yf.rivera1851@uniandes.edu.co>
+Date:   Sat Oct 26 18:18:35 2024 -0500
+
+    rounded photo
+
+[33mcommit a0618dd926e6def51958f63914f2b850105e59d0[m
+Author: Felipe Rivera <yf.rivera1851@uniandes.edu.co>
+Date:   Sat Oct 26 18:08:57 2024 -0500
+
+    navigation implemented
+
+[33mcommit 447ff1b47fc97a77fa3673f058821c47c8fbe707[m
+Author: Felipe Rivera <yf.rivera1851@uniandes.edu.co>
+Date:   Sat Oct 26 17:32:17 2024 -0500
+
+    images and dates
+
+[33mcommit d610dfe82229ba50384d93675c90d45b974318ec[m
+Author: Felipe Rivera <yf.rivera1851@uniandes.edu.co>
+Date:   Sat Oct 26 16:08:12 2024 -0500
+
+    list bands implemented
+
+[33mcommit 1d000e2b18ddbef10ac11670c08583b377945bd0[m
+Author: Felipe Rivera <yf.rivera1851@uniandes.edu.co>
+Date:   Thu Oct 24 21:59:52 2024 -0500
+
+    first implementation
+
+[33mcommit 262ad2d18400febc920da4d362954bbca2013b48[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: Felipe Rivera <yf.rivera1851@uniandes.edu.co>
+Date:   Sun Oct 20 17:12:53 2024 -0500
+
+    initial config
