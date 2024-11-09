@@ -28,21 +28,37 @@ class BandViewModel(application: Application) : AndroidViewModel(application) {
         get() = _isNetworkErrorShown
 
     init {
-        refreshDataFromNetwork()
+        loadBandsIfNeeded()
     }
 
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
+        onErrorHandled()
+    }
+
+    private fun loadBandsIfNeeded() {
+        if (_bands.value.isNullOrEmpty()) {
+            refreshDataFromNetwork()
+        }
     }
 
     private fun refreshDataFromNetwork() {
-        bandsRepository.refreshData({
-            _bands.postValue(it)
-            _eventNetworkError.value = false
-            _isNetworkErrorShown.value = false
-        },{
-            _eventNetworkError.value = true
-        })
+        bandsRepository.refreshData(
+            {
+                if (_bands.value != it) {
+                    _bands.value = it
+                    _eventNetworkError.value = false
+                    _isNetworkErrorShown.value = false
+                }
+            },
+            {
+                _eventNetworkError.value = true
+            }
+        )
+    }
+
+    private fun onErrorHandled() {
+        _eventNetworkError.value = false
     }
 
     class Factory(private val app: Application) : ViewModelProvider.Factory {

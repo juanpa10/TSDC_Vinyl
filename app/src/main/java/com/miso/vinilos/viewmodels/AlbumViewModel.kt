@@ -28,21 +28,37 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
         get() = _isNetworkErrorShown
 
     init {
-        refreshDataFromNetwork()
+        loadAlbumsIfNeeded()
     }
 
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
+        onErrorHandled()
+    }
+
+    private fun loadAlbumsIfNeeded() {
+        if (_albums.value.isNullOrEmpty()) {
+            refreshDataFromNetwork()
+        }
     }
 
     private fun refreshDataFromNetwork() {
-        albumsRepository.refreshData({
-            _albums.postValue(it)
-            _eventNetworkError.value = false
-            _isNetworkErrorShown.value = false
-        },{
-            _eventNetworkError.value = true
-        })
+        albumsRepository.refreshData(
+            {
+                if (_albums.value != it) {
+                    _albums.value = it
+                    _eventNetworkError.value = false
+                    _isNetworkErrorShown.value = false
+                }
+            },
+            {
+                _eventNetworkError.value = true
+            }
+        )
+    }
+
+    private fun onErrorHandled() {
+        _eventNetworkError.value = false
     }
 
     class Factory(private val app: Application) : ViewModelProvider.Factory {

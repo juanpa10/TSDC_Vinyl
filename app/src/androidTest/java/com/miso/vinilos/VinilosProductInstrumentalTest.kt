@@ -24,7 +24,7 @@ import org.junit.runner.RunWith
 class VinilosProductInstrumentalTest {
 
     @get:Rule
-    var activityRule = ActivityScenarioRule(MainActivity::class.java)
+    val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Before
     fun setup() {
