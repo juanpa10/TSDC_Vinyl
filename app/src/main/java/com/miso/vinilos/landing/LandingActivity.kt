@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.miso.vinilos.R
 import com.miso.vinilos.ui.listactivities.AlbumListActivity
 import com.miso.vinilos.ui.listactivities.BandListActivity
+import com.miso.vinilos.ui.listactivities.CollectorListActivity
 
 class LandingActivity : AppCompatActivity() {
 
@@ -56,6 +57,14 @@ class LandingActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.imgArtistas).setOnClickListener {
             startActivity(
                 Intent(this, BandListActivity::class.java),
+                ActivityOptions.makeCustomAnimation(this, 0, 0).toBundle()
+            )
+        }
+
+        // Listener para iniciar CollectorListActivity
+        findViewById<ImageView>(R.id.imgColeccionistas).setOnClickListener {
+            startActivity(
+                Intent(this, CollectorListActivity::class.java),
                 ActivityOptions.makeCustomAnimation(this, 0, 0).toBundle()
             )
         }
