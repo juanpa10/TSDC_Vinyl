@@ -5,12 +5,20 @@ import com.android.volley.VolleyError
 import com.miso.vinilos.models.Album
 import com.miso.vinilos.network.NetworkServiceAdapter
 
-class AlbumsRepository (private val application: Application) {
+class AlbumsRepository(private val application: Application) {
+
+    private var cachedAlbums: List<Album>? = null
 
     fun refreshData(callback: (List<Album>) -> Unit, onError: (VolleyError) -> Unit) {
-        NetworkServiceAdapter.getInstance(application).getAlbums({
+        cachedAlbums?.let {
             callback(it)
-        },
+            return
+        }
+        NetworkServiceAdapter.getInstance(application).getAlbums(
+            {
+                cachedAlbums = it
+                callback(it)
+            },
             onError
         )
     }

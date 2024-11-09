@@ -1,8 +1,10 @@
 package com.miso.vinilos.landing
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -12,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.miso.vinilos.R
-import com.miso.vinilos.main.MainActivity
 import com.miso.vinilos.ui.listactivities.AlbumListActivity
 import com.miso.vinilos.ui.listactivities.BandListActivity
 
@@ -38,6 +39,12 @@ class LandingActivity : AppCompatActivity() {
 
         validateAdmin()
         bindButtonActions()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        actButton.setOnClickListener(null)
+        backToMainBtn.setOnClickListener(null)
     }
 
     private fun validateAdmin() {
@@ -69,38 +76,36 @@ class LandingActivity : AppCompatActivity() {
                     layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
                     layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
                     actButton.layoutParams = layoutParams
-                    
+
                     isFabExpanded = true
                 }
+                Log.d("LandingActivity", "Admin action triggered")
             }
         } else {
             actButton.hide()
+            actButton.setOnClickListener(null)
         }
     }
 
     private fun bindButtonActions() {
-        bindBackToMain()
-        bindBandListBtn()
-        bindAlbumListBtn()
-    }
-
-    private fun bindBackToMain() {
         backToMainBtn.setOnClickListener {
             finish()
         }
-    }
 
-    private fun bindBandListBtn() {
+        // Listener para iniciar BandListActivity
         findViewById<ImageView>(R.id.imgArtistas).setOnClickListener {
-            val intent = Intent(this, BandListActivity::class.java)
-            startActivity(intent)
+            startActivity(
+                Intent(this, BandListActivity::class.java),
+                ActivityOptions.makeCustomAnimation(this, 0, 0).toBundle()
+            )
         }
-    }
 
-    private fun bindAlbumListBtn() {
+        // Listener para iniciar AlbumListActivity
         findViewById<ImageView>(R.id.imgAlbumes).setOnClickListener {
-            val intent = Intent(this, AlbumListActivity::class.java)
-            startActivity(intent)
+            startActivity(
+                Intent(this, AlbumListActivity::class.java),
+                ActivityOptions.makeCustomAnimation(this, 0, 0).toBundle()
+            )
         }
     }
 }
