@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="band_image_description">Imagen del artista</string>
     <string name="album_cover_description">Cover del album</string>
+    <string name="collector_avatar_description">Avatar del coleccionista</string>
     <string name="back_button_description">Atras</string>
     <string name="tittle_landing">MusicPedia</string>
 </resources>

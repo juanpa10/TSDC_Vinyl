@@ -36,6 +36,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:ellipsize="end"
             android:maxLines="1"
+            android:layout_marginStart="8dp"
             android:text="@{album.name}" />
 
         <TextView
@@ -46,6 +47,7 @@
             app:layout_constraintStart_toEndOf="@id/album_cover"
             app:layout_constraintTop_toBottomOf="@id/album_name"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
             android:text="@{album.getFormattedReleaseDate()}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
