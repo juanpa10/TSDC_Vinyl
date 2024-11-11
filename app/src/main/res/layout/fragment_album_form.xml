@@ -9,6 +9,17 @@
     android:padding="16dp">
 
     <!-- Campo Nombre -->
+
+    <Button
+        android:id="@+id/btnUsuario2"
+        android:layout_width="265dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="608dp"
+        android:text="Guardar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_nombre"
         android:layout_width="0dp"
@@ -71,7 +82,8 @@
             android:id="@+id/et_fecha_lanzamiento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="date" />
+            android:inputType="none"
+            android:focusable="false" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Campo Descripción -->

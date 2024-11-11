@@ -1,6 +1,7 @@
 package com.miso.vinilos.network
 
 import android.content.Context
+import android.icu.text.SimpleDateFormat
 import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -18,6 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.Locale
 
 class NetworkServiceAdapter private constructor(context: Context) {
 
@@ -163,4 +165,91 @@ class NetworkServiceAdapter private constructor(context: Context) {
     ): JsonObjectRequest {
         return JsonObjectRequest(Request.Method.PUT, BASE_URL + path, body, responseListener, errorListener)
     }
+
+    fun crearAlbum(
+        album: Album,
+        onComplete: (resp: Album) -> Unit,
+        onError: (error: VolleyError) -> Unit,
+        tag: String = "crearAlbum"
+    ) {
+        val inputDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val outputDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+        val formattedDate = try {
+            val date = inputDateFormat.parse(album.releaseDate)
+            outputDateFormat.format(date) // Salida en formato yyyy-MM-dd
+        } catch (e: Exception) {
+            Log.e("DateFormatError", "Error parsing date: ${e.message}")
+            album.releaseDate // Si falla, usa la fecha original para evitar crash, aunque esto podría ser rechazado por el servidor
+        }
+
+        val coverUrl = album.cover.replace("\\", "")
+        Log.d("CoverUrl", coverUrl.toString())
+        val albumData = JSONObject().apply {
+            put("name", album.name)
+            put("cover", coverUrl)
+            put("releaseDate", formattedDate)
+            put("description", album.description)
+            put("genre", album.genre)
+            put("recordLabel", album.recordLabel)
+        }
+        Log.d("AlbumData", albumData.toString(4))
+        val request = postRequest(
+            "albums",
+            albumData,
+            { response ->
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        val createdAlbum = Album(
+                            id = response.getInt("id"),
+                            name = response.getString("name"),
+                            cover = response.getString("cover"),
+                            releaseDate = response.getString("releaseDate"),
+                            description = response.getString("description"),
+                            genre = response.getString("genre"),
+                            recordLabel = response.getString("recordLabel")
+                        )
+                        withContext(Dispatchers.Main) { onComplete(createdAlbum) }
+                    } catch (e: Exception) {
+                        withContext(Dispatchers.Main) {
+                            Log.e("NetworkServiceAdapter", "Error parsing album: ${e.message}")
+                            onError(VolleyError(e))
+                        }
+                    }
+                }
+            },
+            { error ->
+                //Log.e("NetworkServiceAdapter", "Error creating album: ${error.message}")
+                //onError(error)
+                val statusCode = error.networkResponse?.statusCode
+                var errorMessage = "Unknown error"
+
+                // Verificar si el servidor envió un cuerpo de respuesta
+                if (error.networkResponse?.data != null) {
+                    try {
+                        // Decodificar el cuerpo de la respuesta como JSON
+                        val responseBody = String(error.networkResponse.data, Charsets.UTF_8)
+                        val json = JSONObject(responseBody)
+
+                        // Intentar obtener el mensaje del JSON si existe
+                        errorMessage = json.optString("message", "Error al crear álbum")
+                    } catch (e: Exception) {
+                        Log.e("NetworkServiceAdapter", "Error al crear álbum: ${e.message}")
+                    }
+                }
+                Log.e("NetworkServiceAdapter", "Error creando álbum - código: $statusCode, mensaje: $errorMessage")
+                onError(error)
+            }
+        ).apply {
+            this.tag = tag
+            this.retryPolicy = DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            )
+        }
+
+        requestQueue.add(request)
+    }
+
 }

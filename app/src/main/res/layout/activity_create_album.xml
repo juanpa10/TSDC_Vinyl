@@ -4,9 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/create_album_header" />
+    <include layout="@layout/create_album_header"
+        android:id="@+id/createAlbumHeader"/>
 
     <include
+        android:id="@+id/fragmentAlbumForm"
         layout="@layout/fragment_album_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

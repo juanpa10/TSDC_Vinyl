@@ -22,4 +22,20 @@ class AlbumsRepository(private val application: Application) {
             onError
         )
     }
+
+    fun createAlbum(
+        album: Album,
+        onComplete: (Album) -> Unit,
+        onError: (VolleyError) -> Unit
+    ) {
+        NetworkServiceAdapter.getInstance(application).crearAlbum(
+            album,
+            { createdAlbum ->
+                // Actualiza el caché agregando el nuevo álbum a la lista
+                cachedAlbums = cachedAlbums?.toMutableList()?.apply { add(createdAlbum) } ?: listOf(createdAlbum)
+                onComplete(createdAlbum)
+            },
+            onError
+        )
+    }
 }
