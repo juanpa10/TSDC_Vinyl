@@ -4,9 +4,11 @@ import android.os.Parcel
 import android.os.Parcelable
 import java.text.SimpleDateFormat
 import java.util.Locale
+import androidx.room.*
 
+@Entity(tableName = "bands_table")
 data class Band(
-    val id: Int,
+    @PrimaryKey val id: Int,
     val name: String,
     val image: String,
     val description: String,

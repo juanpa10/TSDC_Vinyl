@@ -3,11 +3,12 @@ package com.miso.vinilos.models
 import android.os.Parcel
 import android.os.Parcelable
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
+import androidx.room.*
 
+@Entity(tableName = "albums_table")
 data class Album(
-    val id: Int,
+    @PrimaryKey val id: Int,
     val name: String,
     val cover: String,
     val releaseDate: String,
