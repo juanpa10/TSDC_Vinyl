@@ -2,9 +2,11 @@ package com.miso.vinilos.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.*
 
+@Entity(tableName = "collectors_table")
 class Collector (
-    val id: Int,
+    @PrimaryKey val id: Int,
     val name: String,
     val telephone: String,
     val email: String,
