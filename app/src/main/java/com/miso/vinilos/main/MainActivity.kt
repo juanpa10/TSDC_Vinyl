@@ -3,6 +3,7 @@ package com.miso.vinilos.main
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.miso.vinilos.R
 import com.miso.vinilos.landing.LandingActivity
@@ -34,4 +35,5 @@ class MainActivity : AppCompatActivity() {
         }
         startActivity(intent)
     }
+
 }

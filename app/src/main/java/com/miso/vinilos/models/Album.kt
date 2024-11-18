@@ -52,12 +52,11 @@ data class Album(
 
     fun getFormattedReleaseDate(): String {
         return try {
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val date = dateFormat.parse(releaseDate)
-            val formattedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            formattedDate.format(date)
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val date = inputFormat.parse(releaseDate)
+            date?.let { outputFormat.format(it) } ?: "Fecha no válida"
         } catch (e: Exception) {
-            e.printStackTrace()
             "Fecha no válida"
         }
     }
