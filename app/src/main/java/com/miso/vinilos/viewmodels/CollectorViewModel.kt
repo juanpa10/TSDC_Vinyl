@@ -6,16 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.miso.vinilos.models.Album
-import com.miso.vinilos.repositories.AlbumsRepository
+import com.miso.vinilos.models.Collector
+import com.miso.vinilos.repositories.CollectorsRepository
 
-class AlbumViewModel(application: Application) : AndroidViewModel(application) {
+class CollectorViewModel (application: Application) : AndroidViewModel(application) {
 
-    private val albumsRepository = AlbumsRepository(application)
-    private val _albums = MutableLiveData<List<Album>>()
+    private val collectorRepository = CollectorsRepository(application)
+    private val _collectors = MutableLiveData<List<Collector>>()
 
-    val albums: LiveData<List<Album>>
-        get() = _albums
+    val collectors: LiveData<List<Collector>>
+        get() = _collectors
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
 
@@ -28,7 +28,7 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
         get() = _isNetworkErrorShown
 
     init {
-        loadAlbumsIfNeeded()
+        loadCollectorsIfNeeded()
     }
 
     fun onNetworkErrorShown() {
@@ -36,17 +36,17 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
         onErrorHandled()
     }
 
-    private fun loadAlbumsIfNeeded() {
-        if (_albums.value.isNullOrEmpty()) {
+    private fun loadCollectorsIfNeeded() {
+        if (_collectors.value.isNullOrEmpty()) {
             refreshDataFromNetwork()
         }
     }
 
     private fun refreshDataFromNetwork() {
-        albumsRepository.refreshData(
+        collectorRepository.refreshData(
             {
-                if (_albums.value != it) {
-                    _albums.value = it
+                if (_collectors.value != it) {
+                    _collectors.value = it
                     _eventNetworkError.value = false
                     _isNetworkErrorShown.value = false
                 }
@@ -63,9 +63,9 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
 
     class Factory(private val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(AlbumViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(CollectorViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return AlbumViewModel(app) as T
+                return CollectorViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +23,6 @@ class AlbumListActivity : AppCompatActivity() {
     private var viewModelAdapter: AlbumsAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        println("entre a la activity")
         super.onCreate(savedInstanceState)
         binding = ActivityAlbumsListBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -36,7 +37,6 @@ class AlbumListActivity : AppCompatActivity() {
 
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, albumDetailFragment)
-                .addToBackStack(null)
                 .commit()
             binding.fragmentContainer.visibility = View.VISIBLE
         }
@@ -54,12 +54,30 @@ class AlbumListActivity : AppCompatActivity() {
 
         viewModel.albums.observe(this, Observer { albums ->
             albums?.let {
-                viewModelAdapter?.albums = it
+                viewModelAdapter!!.submitList(it)
             }
         })
 
         viewModel.eventNetworkError.observe(this, Observer { isNetworkError ->
             if (isNetworkError) onNetworkError()
+        })
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+
+                if (fragment is AlbumDetailFragment) {
+                    supportFragmentManager.beginTransaction()
+                        .remove(fragment)
+                        .commit()
+                    binding.fragmentContainer.visibility = View.GONE
+                } else {
+                    if (isEnabled) {
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                    }
+                }
+            }
         })
     }
 

@@ -3,27 +3,27 @@ package com.miso.vinilos.repositories
 import android.app.Application
 import com.android.volley.VolleyError
 import com.miso.vinilos.database.VinylRoomDatabase
-import com.miso.vinilos.models.Band
+import com.miso.vinilos.models.Collector
 import com.miso.vinilos.network.NetworkServiceAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BandsRepository(private val application: Application) {
+class CollectorsRepository(private val application: Application) {
 
-    private val bandsDao = VinylRoomDatabase.getDatabase(application).bandsDao()
+    private val collectorsDao = VinylRoomDatabase.getDatabase(application).collectorsDao()
 
-    fun refreshData(callback: (List<Band>) -> Unit, onError: (VolleyError) -> Unit) {
+    fun refreshData(callback: (List<Collector>) -> Unit, onError: (VolleyError) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val cachedBands = bandsDao.getBands()
-                if (cachedBands.isNotEmpty()) {
+                val cachedCollectors = collectorsDao.getCollectors()
+                if (cachedCollectors.isNotEmpty()) {
                     withContext(Dispatchers.Main) {
-                        callback(cachedBands)
+                        callback(cachedCollectors)
                     }
                 } else {
-                    fetchBandsFromNetwork(callback, onError)
+                    fetchCollectorsFromNetwork(callback, onError)
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
@@ -33,16 +33,16 @@ class BandsRepository(private val application: Application) {
         }
     }
 
-    private fun fetchBandsFromNetwork(callback: (List<Band>) -> Unit, onError: (VolleyError) -> Unit) {
-        NetworkServiceAdapter.getInstance(application).getBands(
-            { bands ->
+    private fun fetchCollectorsFromNetwork(callback: (List<Collector>) -> Unit, onError: (VolleyError) -> Unit) {
+        NetworkServiceAdapter.getInstance(application).getCollectors(
+            { collectors ->
                 CoroutineScope(Dispatchers.IO).launch {
-                    bandsDao.deleteAll()
-                    bands.forEach { band ->
-                        bandsDao.insert(band)
+                    collectorsDao.deleteAll()
+                    collectors.forEach { collector ->
+                        collectorsDao.insert(collector)
                     }
                     withContext(Dispatchers.Main) {
-                        callback(bands)
+                        callback(collectors)
                     }
                 }
             },

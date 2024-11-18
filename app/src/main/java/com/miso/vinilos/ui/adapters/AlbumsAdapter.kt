@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -11,13 +13,7 @@ import com.miso.vinilos.R
 import com.miso.vinilos.databinding.ItemAlbumBinding
 import com.miso.vinilos.models.Album
 
-class AlbumsAdapter(private val onAlbumClick: (Album) -> Unit) : RecyclerView.Adapter<AlbumsAdapter.AlbumsViewHolder>() {
-
-    var albums: List<Album> = emptyList()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+class AlbumsAdapter(private val onAlbumClick: (Album) -> Unit) : ListAdapter<Album, AlbumsAdapter.AlbumsViewHolder>(AlbumsDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumsViewHolder {
         val withDataBinding: ItemAlbumBinding = DataBindingUtil.inflate(
@@ -28,15 +24,11 @@ class AlbumsAdapter(private val onAlbumClick: (Album) -> Unit) : RecyclerView.Ad
         return AlbumsViewHolder(withDataBinding)
     }
 
-    override fun getItemCount(): Int {
-        return albums.size
-    }
-
     override fun onBindViewHolder(holder: AlbumsViewHolder, position: Int) {
-        val album = albums[position]
+        val album = getItem(position)
         holder.viewDataBinding.also {
-            it.album = albums[position]
-            val imageUrl = albums[position].cover
+            it.album = album
+            val imageUrl = album.cover
             Glide.with(holder.itemView.context)
                 .load(imageUrl)
                 .apply(RequestOptions.circleCropTransform())
@@ -51,6 +43,16 @@ class AlbumsAdapter(private val onAlbumClick: (Album) -> Unit) : RecyclerView.Ad
         companion object {
             @LayoutRes
             val LAYOUT = R.layout.item_album
+        }
+    }
+
+    class AlbumsDiffCallback : DiffUtil.ItemCallback<Album>() {
+        override fun areItemsTheSame(oldItem: Album, newItem: Album): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Album, newItem: Album): Boolean {
+            return oldItem == newItem
         }
     }
 }

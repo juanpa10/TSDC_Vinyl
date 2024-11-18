@@ -2,17 +2,17 @@ package com.miso.vinilos.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.*
 import java.text.SimpleDateFormat
 import java.util.Locale
-import androidx.room.*
 
-@Entity(tableName = "bands_table")
-data class Band(
+@Entity(tableName = "artist_table")
+class Artist (
     @PrimaryKey val id: Int,
     val name: String,
     val image: String,
     val description: String,
-    val creationDate: String
+    val birthDate: String
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -27,28 +27,28 @@ data class Band(
         parcel.writeString(name)
         parcel.writeString(image)
         parcel.writeString(description)
-        parcel.writeString(creationDate)
+        parcel.writeString(birthDate)
     }
 
     override fun describeContents(): Int {
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Band> {
-        override fun createFromParcel(parcel: Parcel): Band {
-            return Band(parcel)
+    companion object CREATOR : Parcelable.Creator<Artist> {
+        override fun createFromParcel(parcel: Parcel): Artist {
+            return Artist(parcel)
         }
 
-        override fun newArray(size: Int): Array<Band?> {
+        override fun newArray(size: Int): Array<Artist?> {
             return arrayOfNulls(size)
         }
     }
 
-    fun getFormattedCreationDate(): String {
+    fun getFormattedBirthDate(): String {
         return try {
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val formattedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            val date = dateFormat.parse(creationDate)
+            val date = dateFormat.parse(birthDate)
             date?.let { formattedDate.format(it) } ?: "Fecha no válida"
         } catch (e: Exception) {
             e.printStackTrace()

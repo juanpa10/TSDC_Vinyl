@@ -13,7 +13,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.miso.vinilos.landing.LandingActivity
 import com.miso.vinilos.main.MainActivity
 import com.miso.vinilos.ui.adapters.AlbumsAdapter
+import com.miso.vinilos.ui.adapters.CollectorsAdapter
 import com.miso.vinilos.ui.listactivities.AlbumListActivity
+import com.miso.vinilos.ui.listactivities.CollectorListActivity
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -24,7 +26,7 @@ import org.junit.runner.RunWith
 class VinilosProductInstrumentalTest {
 
     @get:Rule
-    var activityRule = ActivityScenarioRule(MainActivity::class.java)
+    val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Before
     fun setup() {
@@ -49,7 +51,7 @@ class VinilosProductInstrumentalTest {
     }
 
     @Test
-    fun testBtnAdminAddDisplay(){
+    fun testBtnAdminAddDisplay() {
         onView(withId(R.id.btnAdmin)).perform(click())
         Intents.intended(IntentMatchers.hasComponent(LandingActivity::class.java.name))
         onView(withId(R.id.act)).check(matches(isDisplayed()))
@@ -57,7 +59,7 @@ class VinilosProductInstrumentalTest {
     }
 
     @Test
-    fun testBtnBackToMain(){
+    fun testBtnBackToMain() {
         onView(withId(R.id.btnAdmin)).perform(click())
         Intents.intended(IntentMatchers.hasComponent(LandingActivity::class.java.name))
         onView(withId(R.id.btnBackToMain)).check(matches(isDisplayed()))
@@ -65,13 +67,50 @@ class VinilosProductInstrumentalTest {
     }
 
     @Test
-    fun end2EndUsuario(){
+    fun end2EndUsuario() {
         onView(withId(R.id.btnUsuario)).perform(click())
         Intents.intended(IntentMatchers.hasComponent(LandingActivity::class.java.name))
         onView(withId(R.id.imgAlbumes)).perform(click())
         Intents.intended(IntentMatchers.hasComponent(AlbumListActivity::class.java.name))
         onView(withId(R.id.recyclerView)).check(matches(isDisplayed()))
         Thread.sleep(500)
-        onView(withId(R.id.recyclerView)).perform(actionOnItemAtPosition<AlbumsAdapter.AlbumsViewHolder>(0, click()))
+        onView(withId(R.id.recyclerView)).perform(
+            actionOnItemAtPosition<AlbumsAdapter.AlbumsViewHolder>(
+                0,
+                click()
+            )
+        )
+    }
+
+    @Test
+    fun end2EndUserCollector() {
+        onView(withId(R.id.btnUsuario)).perform(click())
+        Intents.intended(IntentMatchers.hasComponent(LandingActivity::class.java.name))
+        onView(withId(R.id.imgColeccionistas)).perform(click())
+        Intents.intended(IntentMatchers.hasComponent(CollectorListActivity::class.java.name))
+        onView(withId(R.id.recyclerView)).check(matches(isDisplayed()))
+        Thread.sleep(5000)
+        onView(withId(R.id.recyclerView)).perform(
+            actionOnItemAtPosition<CollectorsAdapter.CollectorsViewHolder>(
+                0,
+                click()
+            )
+        )
+    }
+
+    @Test
+    fun end2EndAdminCollector() {
+        onView(withId(R.id.btnAdmin)).perform(click())
+        Intents.intended(IntentMatchers.hasComponent(LandingActivity::class.java.name))
+        onView(withId(R.id.imgColeccionistas)).perform(click())
+        Intents.intended(IntentMatchers.hasComponent(CollectorListActivity::class.java.name))
+        onView(withId(R.id.recyclerView)).check(matches(isDisplayed()))
+        Thread.sleep(5000)
+        onView(withId(R.id.recyclerView)).perform(
+            actionOnItemAtPosition<CollectorsAdapter.CollectorsViewHolder>(
+                0,
+                click()
+            )
+        )
     }
 }

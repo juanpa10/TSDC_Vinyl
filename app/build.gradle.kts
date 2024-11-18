@@ -38,6 +38,9 @@ android {
         viewBinding = true
         dataBinding = true
     }
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
 }
 
 dependencies {
@@ -50,6 +53,10 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.volley)
     implementation(libs.glide)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.gson)
+    kapt(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
