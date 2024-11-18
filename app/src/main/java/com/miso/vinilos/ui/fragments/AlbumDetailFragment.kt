@@ -20,7 +20,12 @@ class AlbumDetailFragment : Fragment() {
     ): View {
         _binding = FragmentAlbumDetailBinding.inflate(inflater, container, false)
 
-        val album = arguments?.getParcelable<Album>("ALBUM_DETAILS")
+        val album = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable("ALBUM_DETAILS", Album::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            arguments?.getParcelable("ALBUM_DETAILS")
+        }
 
         album?.let {
             binding.albumDetailName.text = it.name

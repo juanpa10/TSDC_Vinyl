@@ -47,9 +47,9 @@ data class Band(
     fun getFormattedCreationDate(): String {
         return try {
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val date = dateFormat.parse(creationDate)
             val formattedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            formattedDate.format(date)
+            val date = dateFormat.parse(creationDate)
+            date?.let { formattedDate.format(it) } ?: "Fecha no válida"
         } catch (e: Exception) {
             e.printStackTrace()
             "Fecha no válida"

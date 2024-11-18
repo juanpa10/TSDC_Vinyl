@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
@@ -53,27 +54,31 @@ class AlbumListActivity : AppCompatActivity() {
 
         viewModel.albums.observe(this, Observer { albums ->
             albums?.let {
-                viewModelAdapter?.albums = it
+                viewModelAdapter!!.submitList(it)
             }
         })
 
         viewModel.eventNetworkError.observe(this, Observer { isNetworkError ->
             if (isNetworkError) onNetworkError()
         })
-    }
 
-    // Sobrescribir el comportamiento del back button del sistema
-    override fun onBackPressed() {
-        val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
 
-        if (fragment is AlbumDetailFragment) {
-            supportFragmentManager.beginTransaction()
-                .remove(fragment)
-                .commit()
-            binding.fragmentContainer.visibility = View.GONE
-        } else {
-            super.onBackPressed()
-        }
+                if (fragment is AlbumDetailFragment) {
+                    supportFragmentManager.beginTransaction()
+                        .remove(fragment)
+                        .commit()
+                    binding.fragmentContainer.visibility = View.GONE
+                } else {
+                    if (isEnabled) {
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                    }
+                }
+            }
+        })
     }
 
     private fun onNetworkError() {

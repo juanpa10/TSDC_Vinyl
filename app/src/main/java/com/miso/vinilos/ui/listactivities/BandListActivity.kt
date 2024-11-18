@@ -53,7 +53,7 @@ class BandListActivity : AppCompatActivity() {
 
         viewModel.bands.observe(this, Observer { bands ->
             bands?.let {
-                viewModelAdapter?.bands = it
+                viewModelAdapter!!.submitList(it)
             }
         })
 

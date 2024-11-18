@@ -5,7 +5,7 @@ import android.os.Parcelable
 import androidx.room.*
 
 @Entity(tableName = "collectors_table")
-class Collector (
+class Collector(
     @PrimaryKey val id: Int,
     val name: String,
     val telephone: String,
@@ -13,6 +13,28 @@ class Collector (
     val comments: List<Comment>,
     val favoritePerformers: List<Artist>
 ) : Parcelable {
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || javaClass != other.javaClass) return false
+        other as Collector
+        return id == other.id &&
+                name == other.name &&
+                telephone == other.telephone &&
+                email == other.email &&
+                comments == other.comments &&
+                favoritePerformers == other.favoritePerformers
+    }
+
+    override fun hashCode(): Int {
+        return 31 * id.hashCode() +
+                name.hashCode() +
+                telephone.hashCode() +
+                email.hashCode() +
+                comments.hashCode() +
+                favoritePerformers.hashCode()
+    }
+
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString() ?: "",

@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -11,13 +13,7 @@ import com.miso.vinilos.R
 import com.miso.vinilos.databinding.ItemCollectorBinding
 import com.miso.vinilos.models.Collector
 
-class CollectorsAdapter (private val onCollectorClick: (Collector) -> Unit) : RecyclerView.Adapter<CollectorsAdapter.CollectorsViewHolder>() {
-
-    var collectors: List<Collector> = emptyList()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+class CollectorsAdapter (private val onCollectorClick: (Collector) -> Unit) : ListAdapter<Collector, CollectorsAdapter.CollectorsViewHolder>(CollectorsDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectorsViewHolder {
         val withDataBinding: ItemCollectorBinding = DataBindingUtil.inflate(
@@ -28,15 +24,11 @@ class CollectorsAdapter (private val onCollectorClick: (Collector) -> Unit) : Re
         return CollectorsViewHolder(withDataBinding)
     }
 
-    override fun getItemCount(): Int {
-        return collectors.size
-    }
-
     override fun onBindViewHolder(holder: CollectorsViewHolder, position: Int) {
-        val collector = collectors[position]
+        val collector = getItem(position)
         holder.viewDataBinding.also {
-            it.collector = collectors[position]
-            val imageUrl = collectors[position].favoritePerformers[0].image
+            it.collector = collector
+            val imageUrl = collector.favoritePerformers[0].image
             Glide.with(holder.itemView.context)
                 .load(imageUrl)
                 .apply(RequestOptions.circleCropTransform())
@@ -52,5 +44,16 @@ class CollectorsAdapter (private val onCollectorClick: (Collector) -> Unit) : Re
             @LayoutRes
             val LAYOUT = R.layout.item_collector
         }
+    }
+
+    class CollectorsDiffCallback: DiffUtil.ItemCallback<Collector>(){
+        override fun areItemsTheSame(oldItem: Collector, newItem: Collector): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Collector, newItem: Collector): Boolean {
+           return oldItem == newItem
+        }
+
     }
 }
