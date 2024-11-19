@@ -2,11 +2,13 @@ package com.miso.vinilos.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.*
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+@Entity(tableName = "artist_table")
 class Artist (
-    val id: Int,
+    @PrimaryKey val id: Int,
     val name: String,
     val image: String,
     val description: String,
@@ -45,9 +47,9 @@ class Artist (
     fun getFormattedBirthDate(): String {
         return try {
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val date = dateFormat.parse(birthDate)
             val formattedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            formattedDate.format(date)
+            val date = dateFormat.parse(birthDate)
+            date?.let { formattedDate.format(it) } ?: "Fecha no válida"
         } catch (e: Exception) {
             e.printStackTrace()
             "Fecha no válida"

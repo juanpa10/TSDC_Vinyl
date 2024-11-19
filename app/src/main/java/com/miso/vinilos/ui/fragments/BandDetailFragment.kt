@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.miso.vinilos.R
 import com.miso.vinilos.databinding.FragmentBandDetailBinding
+import com.miso.vinilos.models.Album
 import com.miso.vinilos.models.Band
 
 class BandDetailFragment : Fragment() {
@@ -20,7 +21,12 @@ class BandDetailFragment : Fragment() {
     ): View {
         _binding = FragmentBandDetailBinding.inflate(inflater, container, false)
 
-        val band = arguments?.getParcelable<Band>("BAND_DETAILS")
+        val band = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable("BAND_DETAILS", Band::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            arguments?.getParcelable("BAND_DETAILS")
+        }
 
         band?.let {
             binding.bandDetailName.text = it.name

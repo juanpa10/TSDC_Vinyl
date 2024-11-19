@@ -52,7 +52,7 @@ class CollectorListActivity : AppCompatActivity() {
 
         viewModel.collectors.observe(this, Observer { collectors ->
             collectors?.let {
-                viewModelAdapter?.collectors = it
+                viewModelAdapter!!.submitList(it)
             }
         })
 

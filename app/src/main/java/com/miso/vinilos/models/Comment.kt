@@ -2,9 +2,11 @@ package com.miso.vinilos.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.*
 
+@Entity(tableName = "comments_table")
 class Comment (
-    val id: Int,
+    @PrimaryKey val id: Int,
     val description: String,
     val rating: Int
 ) : Parcelable {

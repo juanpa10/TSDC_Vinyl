@@ -3,11 +3,12 @@ package com.miso.vinilos.models
 import android.os.Parcel
 import android.os.Parcelable
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
+import androidx.room.*
 
+@Entity(tableName = "albums_table")
 data class Album(
-    val id: Int,
+    @PrimaryKey val id: Int,
     val name: String,
     val cover: String,
     val releaseDate: String,
@@ -51,12 +52,11 @@ data class Album(
 
     fun getFormattedReleaseDate(): String {
         return try {
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val date = dateFormat.parse(releaseDate)
-            val formattedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            formattedDate.format(date)
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val date = inputFormat.parse(releaseDate)
+            date?.let { outputFormat.format(it) } ?: "Fecha no válida"
         } catch (e: Exception) {
-            e.printStackTrace()
             "Fecha no válida"
         }
     }

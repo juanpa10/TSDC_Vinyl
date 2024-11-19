@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".landing.LandingActivity"
-    android:background="@color/white">
+    tools:context=".landing.LandingActivity">
 
     <!-- Barra de navegación -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +26,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginVertical="20dp"
             android:background="@drawable/user_rounded_style"
-            android:contentDescription="Botón para regresar al MainActivity"
+            android:contentDescription="@string/btn_regresar_al_mainactivity_description"
             android:src="@drawable/ic_user"
             app:tint="@android:color/black"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +49,7 @@
         android:id="@+id/txtArtistas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Artistas"
+        android:text="@string/txtArtistas"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginTop="50dp"
@@ -75,8 +74,8 @@
             android:id="@+id/imgArtistas"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:contentDescription="imgArtistas"
-            android:src="@drawable/artists"
+            android:contentDescription="@string/img_artistas_description"
+            android:src="@mipmap/artists"
             android:scaleType="fitXY"/>
     </androidx.cardview.widget.CardView>
 
@@ -85,7 +84,7 @@
         android:id="@+id/txtColeccionistas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Coleccionistas"
+        android:text="@string/txtColeccionistas"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginTop="40dp"
@@ -108,8 +107,8 @@
             android:id="@+id/imgColeccionistas"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:contentDescription="imgColeccionistas"
-            android:src="@drawable/collectors"
+            android:contentDescription="@string/img_coleccionistas_description"
+            android:src="@mipmap/collectors"
             android:scaleType="fitXY"/>
     </androidx.cardview.widget.CardView>
 
@@ -118,7 +117,7 @@
         android:id="@+id/txtAlbumes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Álbumes"
+        android:text="@string/txtAlbumes"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginTop="40dp"
@@ -141,7 +140,8 @@
             android:id="@+id/imgAlbumes"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:src="@drawable/albums"
+            android:src="@mipmap/albums"
+            android:contentDescription="@string/img_Card_Album_description"
             android:scaleType="fitXY"/>
     </androidx.cardview.widget.CardView>
 

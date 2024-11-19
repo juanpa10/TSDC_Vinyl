@@ -6,4 +6,14 @@
     <string name="collector_avatar_description">Avatar del coleccionista</string>
     <string name="back_button_description">Atras</string>
     <string name="tittle_landing">MusicPedia</string>
+    <string name="txtBtnUsuario">Ingresar como Usuario</string>
+    <string name="txtBtnAdmin">Ingresar como Admin</string>
+    <string name="descriptionMainbackground">mainBackground</string>
+    <string name="img_Card_Album_description">imgCardAlbum</string>
+    <string name="txtAlbumes">Álbumes</string>
+    <string name="img_coleccionistas_description">imgColeccionistas</string>
+    <string name="txtColeccionistas">Coleccionistas</string>
+    <string name="img_artistas_description">imgArtistas</string>
+    <string name="txtArtistas">Artistas</string>
+    <string name="btn_regresar_al_mainactivity_description">Botón para regresar al MainActivity</string>
 </resources>

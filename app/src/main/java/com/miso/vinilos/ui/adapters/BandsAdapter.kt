@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -11,13 +13,7 @@ import com.miso.vinilos.R
 import com.miso.vinilos.databinding.ItemBandBinding
 import com.miso.vinilos.models.Band
 
-class BandsAdapter(private val onBandClick: (Band) -> Unit) : RecyclerView.Adapter<BandsAdapter.BandsViewHolder>() {
-
-    var bands: List<Band> = emptyList()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+class BandsAdapter(private val onBandClick: (Band) -> Unit) : ListAdapter<Band,BandsAdapter.BandsViewHolder>(BandsDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BandsViewHolder {
         val withDataBinding: ItemBandBinding = DataBindingUtil.inflate(
@@ -28,15 +24,11 @@ class BandsAdapter(private val onBandClick: (Band) -> Unit) : RecyclerView.Adapt
         return BandsViewHolder(withDataBinding)
     }
 
-    override fun getItemCount(): Int {
-        return bands.size
-    }
-
     override fun onBindViewHolder(holder: BandsViewHolder, position: Int) {
-        val band = bands[position]
+        val band = getItem(position)
         holder.viewDataBinding.also {
-            it.band = bands[position]
-            val imageUrl = bands[position].image
+            it.band = band
+            val imageUrl = band.image
             Glide.with(holder.itemView.context)
                 .load(imageUrl)
                 .apply(RequestOptions.circleCropTransform())
@@ -51,6 +43,16 @@ class BandsAdapter(private val onBandClick: (Band) -> Unit) : RecyclerView.Adapt
         companion object {
             @LayoutRes
             val LAYOUT = R.layout.item_band
+        }
+    }
+
+    class BandsDiffCallback : DiffUtil.ItemCallback<Band>(){
+        override fun areItemsTheSame(oldItem: Band, newItem: Band): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Band, newItem: Band): Boolean {
+            return oldItem == newItem
         }
     }
 }

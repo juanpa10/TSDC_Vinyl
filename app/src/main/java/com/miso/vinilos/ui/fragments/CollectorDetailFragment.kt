@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.miso.vinilos.R
 import com.miso.vinilos.databinding.FragmentCollectorDetailBinding
+import com.miso.vinilos.models.Album
 import com.miso.vinilos.models.Collector
 
 class CollectorDetailFragment : Fragment() {
@@ -21,7 +22,12 @@ class CollectorDetailFragment : Fragment() {
     ): View {
         _binding = FragmentCollectorDetailBinding.inflate(inflater, container, false)
 
-        val collector = arguments?.getParcelable<Collector>("COLLECTOR_DETAILS")
+        val collector = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable("COLLECTOR_DETAILS", Collector::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            arguments?.getParcelable("COLLECTOR_DETAILS")
+        }
 
         collector?.let {
             binding.collectorDetailName.text = it.favoritePerformers[0].name
