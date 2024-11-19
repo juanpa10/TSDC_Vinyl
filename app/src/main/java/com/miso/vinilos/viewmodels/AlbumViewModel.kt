@@ -13,6 +13,9 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
 
     private val albumsRepository = AlbumsRepository(application)
     private val _albums = MutableLiveData<List<Album>>()
+    private val _albumCreationStatus = MutableLiveData<Boolean>()
+    val albumCreationStatus: LiveData<Boolean>
+        get() = _albumCreationStatus
 
     val albums: LiveData<List<Album>>
         get() = _albums
@@ -53,6 +56,37 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
             },
             {
                 _eventNetworkError.value = true
+            }
+        )
+    }
+
+    // Método para crear un nuevo álbum desde la UI
+    fun createAlbum(
+        name: String,
+        cover: String,
+        releaseDate: String,
+        description: String,
+        genre: String,
+        recordLabel: String
+    ) {
+        val newAlbum = Album(
+            id = 0, // ID inicializado en 0 o con constructor alternativo si es necesario
+            name = name,
+            cover = cover,
+            releaseDate = releaseDate,
+            description = description,
+            genre = genre,
+            recordLabel = recordLabel
+        )
+
+        albumsRepository.createAlbum(newAlbum,
+            onComplete = { createdAlbum ->
+                // Actualizar la lista de álbumes en el ViewModel
+                _albums.value = _albums.value?.toMutableList()?.apply { add(createdAlbum) }
+                _albumCreationStatus.value = true
+            },
+            onError = {
+                _albumCreationStatus.value = false
             }
         )
     }
