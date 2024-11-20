@@ -79,7 +79,7 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
             recordLabel = recordLabel
         )
 
-        albumsRepository.createAlbum(newAlbum,
+        albumsRepository.createAlbum( newAlbum,
             onComplete = { createdAlbum ->
                 // Actualizar la lista de álbumes en el ViewModel
                 _albums.value = _albums.value?.toMutableList()?.apply { add(createdAlbum) }

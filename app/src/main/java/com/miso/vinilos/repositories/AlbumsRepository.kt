@@ -63,8 +63,10 @@ class AlbumsRepository(private val application: Application) {
             { createdAlbum ->
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
+                        // Inserta el álbum creado en Room
                         albumDao.insert(createdAlbum)
                         withContext(Dispatchers.Main) {
+                            // Llama al callback con el álbum creado
                             onComplete(createdAlbum)
                         }
                     } catch (e: Exception) {
