@@ -58,9 +58,21 @@ class AlbumsRepository(private val application: Application) {
         NetworkServiceAdapter.getInstance(application).crearAlbum(
             album,
             { createdAlbum ->
-                // Actualiza el caché agregando el nuevo álbum a la lista
-                cachedAlbums = cachedAlbums?.toMutableList()?.apply { add(createdAlbum) } ?: listOf(createdAlbum)
-                onComplete(createdAlbum)
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        // Inserta el álbum creado en Room
+                        albumDao.insert(createdAlbum)
+
+                        withContext(Dispatchers.Main) {
+                            // Llama al callback con el álbum creado
+                            onComplete(createdAlbum)
+                        }
+                    } catch (e: Exception) {
+                        withContext(Dispatchers.Main) {
+                            onError(VolleyError(e))
+                        }
+                    }
+                }
             },
             onError
         )
