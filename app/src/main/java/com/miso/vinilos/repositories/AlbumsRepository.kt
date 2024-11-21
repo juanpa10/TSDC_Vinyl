@@ -14,7 +14,10 @@ class AlbumsRepository(private val application: Application) {
 
     private val albumDao = VinylRoomDatabase.getDatabase(application).albumsDao()
 
-    fun refreshData(callback: (List<Album>) -> Unit, onError: (VolleyError) -> Unit) {
+    fun refreshData(
+        callback: (List<Album>) -> Unit,
+        onError: (VolleyError) -> Unit
+    ) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val cachedAlbums = albumDao.getAlbums()
@@ -62,7 +65,6 @@ class AlbumsRepository(private val application: Application) {
                     try {
                         // Inserta el álbum creado en Room
                         albumDao.insert(createdAlbum)
-
                         withContext(Dispatchers.Main) {
                             // Llama al callback con el álbum creado
                             onComplete(createdAlbum)
