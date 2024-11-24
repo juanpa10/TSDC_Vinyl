@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.miso.vinilos.R
 import com.miso.vinilos.ui.listactivities.AlbumListActivity
+import com.miso.vinilos.ui.listactivities.AssociateAlbumActivity
 import com.miso.vinilos.ui.listactivities.BandListActivity
 import com.miso.vinilos.ui.listactivities.CollectorListActivity
 import com.miso.vinilos.ui.listactivities.CreateAlbumActivity
@@ -60,6 +61,12 @@ class LandingActivity : AppCompatActivity() {
             fabLeft.setOnClickListener {
                 startActivity(
                     Intent(this, CreateAlbumActivity::class.java),
+                    ActivityOptions.makeCustomAnimation(this, 0, 0).toBundle()
+                )
+            }
+            fabRight.setOnClickListener {
+                startActivity(
+                    Intent(this, AssociateAlbumActivity::class.java),
                     ActivityOptions.makeCustomAnimation(this, 0, 0).toBundle()
                 )
             }

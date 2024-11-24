@@ -33,6 +33,6 @@ xmlns:tools="http://schemas.android.com/tools">
     <activity android:name=".ui.listactivities.AlbumListActivity" android:exported="true" android:theme="@style/Theme.Vinilos" />
     <activity android:name=".ui.listactivities.CollectorListActivity" android:exported="true" android:theme="@style/Theme.Vinilos" />
     <activity android:name=".ui.listactivities.CreateAlbumActivity" android:exported="true" android:theme="@style/Theme.Vinilos" />
-
+    <activity android:name=".ui.listactivities.AssociateAlbumActivity" android:exported="true" android:theme="@style/Theme.Vinilos" />
 </application>
 </manifest>
