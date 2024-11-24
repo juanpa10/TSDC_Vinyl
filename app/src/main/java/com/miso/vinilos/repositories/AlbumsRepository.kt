@@ -4,6 +4,7 @@ import android.app.Application
 import com.android.volley.VolleyError
 import com.miso.vinilos.database.VinylRoomDatabase
 import com.miso.vinilos.models.Album
+import com.miso.vinilos.models.Track
 import com.miso.vinilos.network.NetworkServiceAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -68,6 +69,35 @@ class AlbumsRepository(private val application: Application) {
                         withContext(Dispatchers.Main) {
                             // Llama al callback con el álbum creado
                             onComplete(createdAlbum)
+                        }
+                    } catch (e: Exception) {
+                        withContext(Dispatchers.Main) {
+                            onError(VolleyError(e))
+                        }
+                    }
+                }
+            },
+            onError
+        )
+    }
+
+    fun associateTrackAlbum(
+        idAlbum: String,
+        track: Track,
+        onComplete: (Track) -> Unit,
+        onError: (VolleyError) -> Unit
+    ) {
+        NetworkServiceAdapter.getInstance(application).asociarTrackAlbum(
+            idAlbum,
+            track,
+            { trackAlbum ->
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        // Inserta el álbum creado en Room
+                        //albumDao.insert(trackAlbum)
+                        withContext(Dispatchers.Main) {
+                            // Llama al callback con el álbum creado
+                            onComplete(trackAlbum)
                         }
                     } catch (e: Exception) {
                         withContext(Dispatchers.Main) {

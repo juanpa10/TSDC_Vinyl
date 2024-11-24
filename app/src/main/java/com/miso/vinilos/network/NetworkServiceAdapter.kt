@@ -16,6 +16,7 @@ import com.miso.vinilos.models.Artist
 import com.miso.vinilos.models.Band
 import com.miso.vinilos.models.Collector
 import com.miso.vinilos.models.Comment
+import com.miso.vinilos.models.Track
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -320,6 +321,73 @@ class NetworkServiceAdapter private constructor(context: Context) {
                     }
                 }
                 Log.e("NetworkServiceAdapter", "Error creando álbum - código: $statusCode, mensaje: $errorMessage")
+                onError(error)
+            }
+        ).apply {
+            this.tag = tag
+            this.retryPolicy = DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            )
+        }
+
+        requestQueue.add(request)
+    }
+
+    fun asociarTrackAlbum(
+        idAlbum: String,
+        track: Track,
+        onComplete: (resp: Track) -> Unit,
+        onError: (error: VolleyError) -> Unit,
+        tag: String = "AsociarTrackAlbum"
+    ) {
+
+        val trackData = JSONObject().apply {
+            put("name", track.name)
+            put("duration", track.duration)
+        }
+        Log.d("TrackData", trackData.toString(4))
+        val request = postRequest(
+            "albums/$idAlbum/tracks",
+            trackData,
+            { response ->
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        val track = Track(
+                            id = response.getInt("id"),
+                            name = response.getString("name"),
+                            duration = response.getString("duration")
+                        )
+                        withContext(Dispatchers.Main) { onComplete(track) }
+                    } catch (e: Exception) {
+                        withContext(Dispatchers.Main) {
+                            Log.e("NetworkServiceAdapter", "Error parsing track: ${e.message}")
+                            onError(VolleyError(e))
+                        }
+                    }
+                }
+            },
+            { error ->
+                //Log.e("NetworkServiceAdapter", "Error creating album: ${error.message}")
+                //onError(error)
+                val statusCode = error.networkResponse?.statusCode
+                var errorMessage = "Unknown error"
+
+                // Verificar si el servidor envió un cuerpo de respuesta
+                if (error.networkResponse?.data != null) {
+                    try {
+                        // Decodificar el cuerpo de la respuesta como JSON
+                        val responseBody = String(error.networkResponse.data, Charsets.UTF_8)
+                        val json = JSONObject(responseBody)
+
+                        // Intentar obtener el mensaje del JSON si existe
+                        errorMessage = json.optString("message", "Error al asociar track a álbum")
+                    } catch (e: Exception) {
+                        Log.e("NetworkServiceAdapter", "Error al asociar track a álbum: ${e.message}")
+                    }
+                }
+                Log.e("NetworkServiceAdapter", "Error al asociar track a álbum - código: $statusCode, mensaje: $errorMessage")
                 onError(error)
             }
         ).apply {

@@ -7,15 +7,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.miso.vinilos.models.Album
+import com.miso.vinilos.models.Track
 import com.miso.vinilos.repositories.AlbumsRepository
 
 class AlbumViewModel(application: Application) : AndroidViewModel(application) {
 
     private val albumsRepository = AlbumsRepository(application)
     private val _albums = MutableLiveData<List<Album>>()
+
     private val _albumCreationStatus = MutableLiveData<Boolean>()
     val albumCreationStatus: LiveData<Boolean>
         get() = _albumCreationStatus
+
+    private val _albumTrackStatus = MutableLiveData<Boolean>()
+    val albumTrackStatus: LiveData<Boolean>
+        get() = _albumTrackStatus
 
     val albums: LiveData<List<Album>>
         get() = _albums
@@ -87,6 +93,30 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
             },
             onError = {
                 _albumCreationStatus.value = false
+            }
+        )
+    }
+
+    // Método para crear un nuevo álbum desde la UI
+    fun associateTrackAlbum(
+        id: String,
+        name: String,
+        duration: String
+    ) {
+        val newTrack = Track(
+            id = id.toInt(), // ID inicializado en 0 o con constructor alternativo si es necesario
+            name = name,
+            duration = duration
+        )
+
+        albumsRepository.associateTrackAlbum( id, newTrack,
+            onComplete = { associateTrack ->
+                // Actualizar la lista de álbumes en el ViewModel
+                //_albums.value = _albums.value?.toMutableList()?.apply { add(createdAlbum) }
+                _albumTrackStatus.value = true
+            },
+            onError = {
+                _albumTrackStatus.value = false
             }
         )
     }
