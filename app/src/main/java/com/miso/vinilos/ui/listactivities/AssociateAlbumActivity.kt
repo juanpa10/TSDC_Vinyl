@@ -51,12 +51,12 @@ class AssociateAlbumActivity : AppCompatActivity() {
         })
 
         viewModel.albumCreationStatus.observe(this, Observer { isSuccess ->
-            showToast(if (isSuccess == true) "Álbum creado exitosamente" else "Error al crear el álbum")
+            showToast(if (isSuccess == true) getString(R.string.album_created_successfully) else getString(R.string.album_creation_failed))
             if (isSuccess == true) clearInputFields()
         })
 
         viewModel.albumTrackStatus.observe(this, Observer { isSuccess ->
-            showToast(if (isSuccess == true) "Track asociado a Álbum exitosamente" else "Error al asociar Track al álbum")
+            showToast(if (isSuccess == true) getString(R.string.track_created_successfully) else getString(R.string.track_creation_failed))
             if (isSuccess == true) clearInputFields()
         })
     }
@@ -87,10 +87,15 @@ class AssociateAlbumActivity : AppCompatActivity() {
         var hasError = false
         fields.forEach { (editText, inputLayout) ->
             if (editText.text.toString().isEmpty()) {
-                inputLayout.error = "Este campo es obligatorio"
+                inputLayout.error = getString(R.string.field_required)
                 hasError = true
             } else {
                 inputLayout.error = null
+
+                if (editText == binding.trackFragment.etDuracion && !editText.text.toString().matches("\\d{2}:\\d{2}".toRegex())) {
+                    inputLayout.error = getString(R.string.invalid_format)
+                    hasError = true
+                }
             }
         }
 
@@ -121,10 +126,10 @@ class AssociateAlbumActivity : AppCompatActivity() {
 
     private fun onNetworkError() {
         if (!viewModel.isNetworkErrorShown.value!!) {
-            showToast("Error de conexión. Por favor intente de nuevo!")
+            showToast(getString(R.string.error_connection))
             viewModel.onNetworkErrorShown()
         } else if (!viewModel.eventNetworkError.value!!) {
-            showToast("Error de conexión. Por favor intente de nuevo!")
+            showToast(getString(R.string.error_connection))
             viewModel.onNetworkErrorShown()
         }
     }
