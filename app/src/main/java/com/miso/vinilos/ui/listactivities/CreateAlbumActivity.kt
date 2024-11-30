@@ -52,7 +52,10 @@ class CreateAlbumActivity : AppCompatActivity() {
             finish()
         }
 
-        viewModel = ViewModelProvider(this, AlbumViewModel.Factory(application)).get(AlbumViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this,
+            AlbumViewModel.Factory(application)
+        ).get(AlbumViewModel::class.java)
 
         viewModel.eventNetworkError.observe(this, Observer { isNetworkError ->
             if (isNetworkError) onNetworkError()
@@ -70,70 +73,40 @@ class CreateAlbumActivity : AppCompatActivity() {
 
         // Configuración del botón para crear el álbum
         binding.fragmentAlbumForm.btnUsuario2.setOnClickListener {
+            val fields = listOf(
+                binding.fragmentAlbumForm.etNombre to binding.fragmentAlbumForm.tilNombre,
+                binding.fragmentAlbumForm.etCaratula to binding.fragmentAlbumForm.tilCaratula,
+                binding.fragmentAlbumForm.etFechaLanzamiento to binding.fragmentAlbumForm.tilFechaLanzamiento,
+                binding.fragmentAlbumForm.etDescripcion to binding.fragmentAlbumForm.tilDescripcion,
+                binding.fragmentAlbumForm.etGenero to binding.fragmentAlbumForm.tilGenero,
+                binding.fragmentAlbumForm.etEtiqueta to binding.fragmentAlbumForm.tilEtiqueta
+            )
+
             var hasError = false
-            // Llamar a createAlbum con los datos que se capturan de la UI
-            val name = binding.fragmentAlbumForm.etNombre.text.toString()
-            if (name.isEmpty()) {
-                binding.fragmentAlbumForm.tilNombre.error = "Este campo es obligatorio"
-                hasError = true
-            } else {
-                binding.fragmentAlbumForm.tilNombre.error = null // Limpiar el error si está correcto
-            }
 
-            val cover = binding.fragmentAlbumForm.etCaratula.text.toString()
-            if (cover.isEmpty()) {
-                binding.fragmentAlbumForm.tilCaratula.error = "Este campo es obligatorio"
-                hasError = true
-            } else {
-                binding.fragmentAlbumForm.tilCaratula.error = null
-            }
-            val releaseDate = binding.fragmentAlbumForm.etFechaLanzamiento.text.toString()
-            if (releaseDate.isEmpty()) {
-                binding.fragmentAlbumForm.tilFechaLanzamiento.error = "Este campo es obligatorio"
-                hasError = true
-            } else {
-                binding.fragmentAlbumForm.tilFechaLanzamiento.error = null
-            }
-
-            val description = binding.fragmentAlbumForm.etDescripcion.text.toString()
-            if (description.isEmpty()) {
-                binding.fragmentAlbumForm.tilDescripcion.error = "Este campo es obligatorio"
-                hasError = true
-            } else {
-                binding.fragmentAlbumForm.tilDescripcion.error = null
-            }
-
-            val genre = binding.fragmentAlbumForm.etGenero.text.toString()
-            if (genre.isEmpty()) {
-                binding.fragmentAlbumForm.tilGenero.error = "Este campo es obligatorio"
-                hasError = true
-            } else {
-                binding.fragmentAlbumForm.tilGenero.error = null
-            }
-
-            val recordLabel = binding.fragmentAlbumForm.etEtiqueta.text.toString()
-            if (recordLabel.isEmpty()) {
-                binding.fragmentAlbumForm.tilEtiqueta.error = "Este campo es obligatorio"
-                hasError = true
-            } else {
-                binding.fragmentAlbumForm.tilEtiqueta.error = null
+            fields.forEach { (editText, textInputLayout) ->
+                if (editText.text.toString().isEmpty()) {
+                    textInputLayout.error = "Este campo es obligatorio"
+                    hasError = true
+                } else {
+                    textInputLayout.error = null
+                }
             }
 
             if (!hasError) {
                 viewModel.createAlbum(
-                    name = name,
-                    cover = cover,
-                    releaseDate = releaseDate,
-                    description = description,
-                    genre = genre,
-                    recordLabel = recordLabel
+                    name = binding.fragmentAlbumForm.etNombre.text.toString(),
+                    cover = binding.fragmentAlbumForm.etCaratula.text.toString(),
+                    releaseDate = binding.fragmentAlbumForm.etFechaLanzamiento.text.toString(),
+                    description = binding.fragmentAlbumForm.etDescripcion.text.toString(),
+                    genre = binding.fragmentAlbumForm.etGenero.text.toString(),
+                    recordLabel = binding.fragmentAlbumForm.etEtiqueta.text.toString()
                 )
             }
         }
-
     }
 
-    private fun clearInputFields() {
+        private fun clearInputFields() {
         binding.fragmentAlbumForm.etNombre.text?.clear()
         binding.fragmentAlbumForm.etCaratula.text?.clear()
         binding.fragmentAlbumForm.etFechaLanzamiento.text?.clear()

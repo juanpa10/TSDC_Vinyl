@@ -16,4 +16,9 @@
     <string name="img_artistas_description">imgArtistas</string>
     <string name="txtArtistas">Artistas</string>
     <string name="btn_regresar_al_mainactivity_description">Botón para regresar al MainActivity</string>
+    <string name="fabTxtCrearAlbum">Crear\nálbum</string>
+    <string name="fabTxtAsociarTrack">Asociar\ntrack</string>
+    <string name="descriptionFabLeft">Crear Album</string>
+    <string name="descriptionFabRight">Asociar Track</string>
+
 </resources>
