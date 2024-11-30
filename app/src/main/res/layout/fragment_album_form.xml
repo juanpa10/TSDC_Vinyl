@@ -32,7 +32,8 @@
         android:layout_marginTop="16dp"
         app:backgroundTint="@color/black"
         app:errorEnabled="true"
-        app:helperTextTextColor="@color/design_default_color_error">>
+        android:textColor="@android:color/black"
+        app:helperTextTextColor="@color/design_default_color_error">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_nombre"
@@ -54,6 +55,7 @@
         android:layout_marginTop="16dp"
         app:backgroundTint="@color/black"
         app:errorEnabled="true"
+        android:textColor="@android:color/black"
         app:helperTextTextColor="@color/design_default_color_error">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -99,6 +101,7 @@
         android:layout_marginTop="16dp"
         app:backgroundTint="@color/black"
         app:errorEnabled="true"
+        android:textColor="@android:color/black"
         app:helperTextTextColor="@color/design_default_color_error">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -121,6 +124,7 @@
         android:layout_marginTop="16dp"
         app:backgroundTint="@color/black"
         app:errorEnabled="true"
+        android:textColor="@android:color/black"
         app:helperTextTextColor="@color/design_default_color_error">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -143,6 +147,7 @@
         android:layout_marginTop="16dp"
         app:backgroundTint="@color/black"
         app:errorEnabled="true"
+        android:textColor="@android:color/black"
         app:helperTextTextColor="@color/design_default_color_error">
 
         <com.google.android.material.textfield.TextInputEditText

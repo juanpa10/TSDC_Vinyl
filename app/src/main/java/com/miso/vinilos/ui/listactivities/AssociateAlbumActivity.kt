@@ -25,26 +25,25 @@ class AssociateAlbumActivity : AppCompatActivity() {
         binding = ActivityAsociarTrackBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupRecyclerView()
+        setupViewModel()
+        setupListeners()
+    }
+
+    private fun setupRecyclerView() {
         viewModelAdapter = AlbumsAssociateAdapter { album ->
-            val etId = binding.trackFragment.etId
-            etId.setText(album.id.toString())
+            binding.trackFragment.etId.setText(album.id.toString())
         }
 
-        binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(this@AssociateAlbumActivity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = viewModelAdapter
-        }
+        binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerView.adapter = viewModelAdapter
+    }
 
-        binding.root.findViewById<ImageView>(R.id.back_button).setOnClickListener {
-            finish()
-        }
-
+    private fun setupViewModel() {
         viewModel = ViewModelProvider(this, AlbumViewModel.Factory(application)).get(AlbumViewModel::class.java)
 
         viewModel.albums.observe(this, Observer { albums ->
-            albums?.let {
-                viewModelAdapter!!.submitList(it)
-            }
+            albums?.let { viewModelAdapter?.submitList(it) }
         })
 
         viewModel.eventNetworkError.observe(this, Observer { isNetworkError ->
@@ -52,62 +51,50 @@ class AssociateAlbumActivity : AppCompatActivity() {
         })
 
         viewModel.albumCreationStatus.observe(this, Observer { isSuccess ->
-            if (isSuccess == true) {
-                Toast.makeText(this, "Álbum creado exitosamente", Toast.LENGTH_SHORT).show()
-                // Limpiar los campos de entrada en la vista
-                clearInputFields()
-            } else {
-                Toast.makeText(this, "Error al crear el álbum", Toast.LENGTH_SHORT).show()
-            }
+            showToast(if (isSuccess == true) "Álbum creado exitosamente" else "Error al crear el álbum")
+            if (isSuccess == true) clearInputFields()
         })
 
         viewModel.albumTrackStatus.observe(this, Observer { isSuccess ->
-            if (isSuccess == true) {
-                Toast.makeText(this, "Track asociado a Álbum exitosamente", Toast.LENGTH_SHORT).show()
-                // Limpiar los campos de entrada en la vista
-                clearInputFields()
-            } else {
-                Toast.makeText(this, "Error al asociar Track al álbum", Toast.LENGTH_SHORT).show()
-            }
+            showToast(if (isSuccess == true) "Track asociado a Álbum exitosamente" else "Error al asociar Track al álbum")
+            if (isSuccess == true) clearInputFields()
         })
+    }
 
-        // Configuración del botón para crear el álbum
+    private fun setupListeners() {
+        binding.root.findViewById<ImageView>(R.id.back_button).setOnClickListener {
+            finish()
+        }
+
         binding.trackFragment.btnUsuario3.setOnClickListener {
-            var hasError = false
-            // Llamar a asociarTrack con los datos que se capturan de la UI
-            val id = binding.trackFragment.etId.text.toString()
-            if (id.isEmpty()) {
-                binding.trackFragment.tilId.error = "Este campo es obligatorio"
-                hasError = true
-            } else {
-                binding.trackFragment.tilId.error = null // Limpiar el error si está correcto
-            }
-
-            val name = binding.trackFragment.etNombre.text.toString()
-            if (name.isEmpty()) {
-                binding.trackFragment.tilNombre.error = "Este campo es obligatorio"
-                hasError = true
-            } else {
-                binding.trackFragment.tilNombre.error = null // Limpiar el error si está correcto
-            }
-
-            val duration = binding.trackFragment.etDuracion.text.toString()
-            if (duration.isEmpty()) {
-                binding.trackFragment.tilDuracion.error = "Este campo es obligatorio"
-                hasError = true
-            } else {
-                binding.trackFragment.tilDuracion.error = null
-            }
-
-            if (!hasError) {
+            if (validateInputFields()) {
                 viewModel.associateTrackAlbum(
-                    id = id,
-                    name = name,
-                    duration = duration
+                    id = binding.trackFragment.etId.text.toString(),
+                    name = binding.trackFragment.etNombre.text.toString(),
+                    duration = binding.trackFragment.etDuracion.text.toString()
                 )
             }
         }
+    }
 
+    private fun validateInputFields(): Boolean {
+        val fields = listOf(
+            binding.trackFragment.etId to binding.trackFragment.tilId,
+            binding.trackFragment.etNombre to binding.trackFragment.tilNombre,
+            binding.trackFragment.etDuracion to binding.trackFragment.tilDuracion
+        )
+
+        var hasError = false
+        fields.forEach { (editText, inputLayout) ->
+            if (editText.text.toString().isEmpty()) {
+                inputLayout.error = "Este campo es obligatorio"
+                hasError = true
+            } else {
+                inputLayout.error = null
+            }
+        }
+
+        return !hasError
     }
 
     private fun clearInputFields() {
@@ -116,10 +103,12 @@ class AssociateAlbumActivity : AppCompatActivity() {
         binding.trackFragment.etDuracion.text?.clear()
     }
 
-    // Sobrescribir el comportamiento del back button del sistema
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
     override fun onBackPressed() {
         val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-
         if (fragment is AlbumDetailFragment) {
             supportFragmentManager.beginTransaction()
                 .remove(fragment)
@@ -132,10 +121,10 @@ class AssociateAlbumActivity : AppCompatActivity() {
 
     private fun onNetworkError() {
         if (!viewModel.isNetworkErrorShown.value!!) {
-            Toast.makeText(this, "Error de conexion. Por favor intente de nuevo!", Toast.LENGTH_LONG).show()
+            showToast("Error de conexión. Por favor intente de nuevo!")
             viewModel.onNetworkErrorShown()
-        }else if(!viewModel.eventNetworkError.value!!) {
-            Toast.makeText(this, "Error de conexion. Por favor intente de nuevo!", Toast.LENGTH_LONG).show()
+        } else if (!viewModel.eventNetworkError.value!!) {
+            showToast("Error de conexión. Por favor intente de nuevo!")
             viewModel.onNetworkErrorShown()
         }
     }
