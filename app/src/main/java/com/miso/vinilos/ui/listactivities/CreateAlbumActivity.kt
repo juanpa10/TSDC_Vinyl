@@ -4,6 +4,8 @@ import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -29,19 +31,23 @@ class CreateAlbumActivity : AppCompatActivity() {
         binding = ActivityCreateAlbumBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Configurar el DatePickerDialog al hacer clic en el campo de fecha
+        val itemsLabel = arrayOf(getString(R.string.sony_music), getString(R.string.emi), getString(R.string.discos_fuentes), getString(R.string.elektra), getString(R.string.fania_records))
+        val itemsGenre = arrayOf(getString(R.string.classical), getString(R.string.salsa), getString(R.string.rock), getString(R.string.folk))
+        val adapterLabel = ArrayAdapter(this, R.layout.dropdown_menu_popup_item, itemsLabel)
+        val adapterGenre = ArrayAdapter(this, R.layout.dropdown_menu_popup_item, itemsGenre)
+        val editTextLabel = findViewById<AutoCompleteTextView>(R.id.et_etiqueta)
+        val editTextGenre = findViewById<AutoCompleteTextView>(R.id.et_genero)
+        editTextLabel.setAdapter(adapterLabel)
+        editTextGenre.setAdapter(adapterGenre)
+
         binding.fragmentAlbumForm.etFechaLanzamiento.setOnClickListener {
-            // Obtener la fecha actual
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-            // Crear y mostrar el DatePickerDialog
             val datePicker = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
-                // Formatear la fecha seleccionada
                 val selectedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
-                // Mostrar la fecha en el campo de texto
                 binding.fragmentAlbumForm.etFechaLanzamiento.setText(selectedDate)
             }, year, month, day)
 
@@ -63,15 +69,13 @@ class CreateAlbumActivity : AppCompatActivity() {
 
         viewModel.albumCreationStatus.observe(this, Observer { isSuccess ->
             if (isSuccess == true) {
-                Toast.makeText(this, "Álbum creado exitosamente", Toast.LENGTH_SHORT).show()
-                // Limpiar los campos de entrada en la vista
+                Toast.makeText(this, getString(R.string.album_created_successfully), Toast.LENGTH_SHORT).show()
                 clearInputFields()
             } else {
-                Toast.makeText(this, "Error al crear el álbum", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.album_creation_failed), Toast.LENGTH_SHORT).show()
             }
         })
 
-        // Configuración del botón para crear el álbum
         binding.fragmentAlbumForm.btnUsuario2.setOnClickListener {
             val fields = listOf(
                 binding.fragmentAlbumForm.etNombre to binding.fragmentAlbumForm.tilNombre,
@@ -86,7 +90,7 @@ class CreateAlbumActivity : AppCompatActivity() {
 
             fields.forEach { (editText, textInputLayout) ->
                 if (editText.text.toString().isEmpty()) {
-                    textInputLayout.error = "Este campo es obligatorio"
+                    textInputLayout.error = getString(R.string.field_required)
                     hasError = true
                 } else {
                     textInputLayout.error = null
@@ -115,7 +119,6 @@ class CreateAlbumActivity : AppCompatActivity() {
         binding.fragmentAlbumForm.etEtiqueta.text?.clear()
     }
 
-    // Sobrescribir el comportamiento del back button del sistema
     override fun onBackPressed() {
         val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
 
@@ -131,10 +134,10 @@ class CreateAlbumActivity : AppCompatActivity() {
 
     private fun onNetworkError() {
         if (!viewModel.isNetworkErrorShown.value!!) {
-            Toast.makeText(this, "Error de conexion. Por favor intente de nuevo!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.error_connection), Toast.LENGTH_LONG).show()
             viewModel.onNetworkErrorShown()
         }else if(!viewModel.eventNetworkError.value!!) {
-            Toast.makeText(this, "Error de conexion. Por favor intente de nuevo!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.error_connection), Toast.LENGTH_LONG).show()
             viewModel.onNetworkErrorShown()
         }
     }
