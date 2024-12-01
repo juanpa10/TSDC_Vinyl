@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/albumFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Campo Nombre -->
+
+    <Button
+        android:id="@+id/btnUsuario2"
+        android:layout_width="265dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="608dp"
+        android:text="Guardar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_nombre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Nombre"
+        app:endIconMode="clear_text"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        app:backgroundTint="@color/black"
+        app:errorEnabled="true"
+        android:textColor="@android:color/black"
+        app:helperTextTextColor="@color/design_default_color_error">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_nombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Campo Carátula -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_caratula"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Carátula"
+        app:endIconMode="clear_text"
+        app:layout_constraintTop_toBottomOf="@id/til_nombre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        app:backgroundTint="@color/black"
+        app:errorEnabled="true"
+        android:textColor="@android:color/black"
+        app:helperTextTextColor="@color/design_default_color_error">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_caratula"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Campo Fecha de Lanzamiento -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_fecha_lanzamiento"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Fecha de lanzamiento"
+        app:endIconMode="clear_text"
+        app:layout_constraintTop_toBottomOf="@id/til_caratula"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        app:backgroundTint="@color/black"
+        app:errorEnabled="true"
+        app:helperTextTextColor="@color/design_default_color_error">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_fecha_lanzamiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:focusable="false" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Campo Descripción -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_descripcion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Descripción"
+        app:endIconMode="clear_text"
+        app:layout_constraintTop_toBottomOf="@id/til_fecha_lanzamiento"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        app:backgroundTint="@color/black"
+        app:errorEnabled="true"
+        android:textColor="@android:color/black"
+        app:helperTextTextColor="@color/design_default_color_error">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_descripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Campo Género -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_genero"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Género"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_descripcion"
+        android:layout_marginTop="16dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/et_genero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:textColor="@android:color/black" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Campo Etiqueta -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_etiqueta"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Etiqueta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_genero"
+        android:layout_marginTop="16dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/et_etiqueta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:textColor="@android:color/black" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

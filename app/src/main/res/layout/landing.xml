@@ -145,6 +145,30 @@
             android:scaleType="fitXY"/>
     </androidx.cardview.widget.CardView>
 
+    <!-- Botón adicional izquierdo (Crear Álbum) -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="60dp"
+        android:visibility="gone"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/act" />
+
+    <TextView
+        android:id="@+id/text_fab_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fabTxtCrearAlbum"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/descriptionFabLeft"
+        app:layout_constraintBottom_toBottomOf="@id/fab_left"
+        app:layout_constraintEnd_toStartOf="@id/fab_left"
+        app:layout_constraintTop_toTopOf="@id/fab_left"
+        android:visibility="gone" />
+
     <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/act"
@@ -156,5 +180,30 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add"
-        tools:ignore="HardcodedText"/>
+        tools:ignore="HardcodedText" />
+
+    <!-- Botón adicional derecho (Asociar Track) -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="60dp"
+        android:visibility="gone"
+        android:contentDescription="@string/descriptionFabRight"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/act" />
+    <!-- Texto para el botón 'fab_right' -->
+    <TextView
+        android:id="@+id/text_fab_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fabTxtAsociarTrack"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/fab_right"
+        app:layout_constraintStart_toEndOf="@id/fab_right"
+        app:layout_constraintTop_toTopOf="@id/fab_right"
+        android:visibility="gone" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,4 +16,25 @@
     <string name="img_artistas_description">imgArtistas</string>
     <string name="txtArtistas">Artistas</string>
     <string name="btn_regresar_al_mainactivity_description">Botón para regresar al MainActivity</string>
+    <string name="fabTxtCrearAlbum">Crear\nálbum</string>
+    <string name="fabTxtAsociarTrack">Asociar\ntrack</string>
+    <string name="descriptionFabLeft">Crear Album</string>
+    <string name="descriptionFabRight">Asociar Track</string>
+    <string name="album_created_successfully">Álbum creado exitosamente</string>
+    <string name="album_creation_failed">Error al crear el álbum</string>
+    <string name="field_required">Este campo es obligatorio</string>
+    <string name="error_connection">Error de conexión. Por favor intente de nuevo!</string>
+    <string name="invalid_format">Formato inválido, use MM:SS</string>
+    <string name="track_created_successfully">Track asociado a Álbum exitosamente</string>
+    <string name="track_creation_failed">Error al asociar Track al álbum</string>
+    <string name="sony_music">Sony Music</string>
+    <string name="emi">EMI</string>
+    <string name="discos_fuentes">Discos Fuentes</string>
+    <string name="elektra">Elektra</string>
+    <string name="fania_records">Fania Records</string>
+    <string name="classical">Classical</string>
+    <string name="salsa">Salsa</string>
+    <string name="rock">Rock</string>
+    <string name="folk">Folk</string>
+
 </resources>
